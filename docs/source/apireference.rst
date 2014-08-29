@@ -1,3 +1,5 @@
+.. automodule:: securemongoengine
+
 Fields
 ==========
 
