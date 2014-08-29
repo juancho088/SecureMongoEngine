@@ -6,11 +6,11 @@ It is a library for MongoEngine(https://github.com/MongoEngine) that you can use
 Usage
 -------
 
-To install SecureMongoeEngine, just execute: ::
+To install SecureMongoeEngine just execute: ::
 
 	$ pip install securemongoengine
 
-And now you can create a documment with some encrypted fields, you just need a key an thats all!!: ::
+And now you can create a documment with some encrypted fields, you just need a key an thats all!!! ::
 	
 	from mongoengine import *
 	from securemongoengine.fields import *
@@ -30,7 +30,8 @@ And now you can create a documment with some encrypted fields, you just need a k
 
 In your Mongo database you will see something like this: ::
 
-	{ "_id" : ObjectId("5400c7205f9370f0603c3cfa"), "name" : "Juan", "lastname" : "Urrego", "email" : "js.urrego@novcat.co", "password" : "@::::@685f0500d7b99a59c9d6c496184a65bc" }
+	{ "_id" : ObjectId("5400c7205f9370f0603c3cfa"), "name" : "Juan", "lastname" : "Urrego", 
+	"email" : "js.urrego@novcat.co", "password" : "@::::@685f0500d7b99a59c9d6c496184a65bc" }
 
 
 Contents:
@@ -59,7 +60,7 @@ formats for offline reading.
 
 
 .. toctree::
-    :maxdepth: 1
+	:maxdepth: 1
     :numbered:
     :hidden:
 
