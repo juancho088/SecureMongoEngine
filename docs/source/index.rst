@@ -6,11 +6,11 @@ It is a library for MongoEngine(https://github.com/MongoEngine) that you can use
 Usage
 -------
 
-To install SecureMongoeEngine, just execute: ::
+To install SecureMongoeEngine just execute: ::
 
 	$ pip install securemongoengine
 
-And now you can create a documment with some encrypted fields, you just need a key an thats all!!: ::
+And now you can create a documment with some encrypted fields, you just need a key an thats all!!! ::
 	
 	from mongoengine import *
 	from securemongoengine.fields import *
