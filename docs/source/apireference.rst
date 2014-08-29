@@ -1,7 +1,9 @@
-.. automodule:: securemongoengine
+==========
+API
+==========
 
 Fields
-==========
+========
 
 .. autoclass:: securemongoengine.base.fields.EncryptedField
 .. autoclass:: securemongoengine.fields.EncryptedEmailField
