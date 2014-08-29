@@ -37,6 +37,8 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+   
+   apireference
 
 :doc:`tutorial`
   A quick tutorial building a tumblelog to get you up and running with
