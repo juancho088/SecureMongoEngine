@@ -55,7 +55,7 @@ class EncryptedField(BaseField):
 
     def get_aes_cipher(self):
         if len(self.key)==16 or len(self.key)==24 or len(self.key)==32:
-            if self.iv:
+            if self.iv and len(self.iv):
                 return AES.new(self.key,IV=self.iv)
             else:
                 return AES.new(self.key)

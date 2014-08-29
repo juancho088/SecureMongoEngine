@@ -6,38 +6,39 @@ It is a library for MongoEngine(https://github.com/MongoEngine) that you can use
 Usage
 -------
 
-If you want to encrypt your data you only need to use the field that you need. ::
+To install SecureMongoeEngine, just execute: ::
 
+	$ pip install securemongoengine
+
+And now you can create a documment with some encrypted fields, you just need a key an thats all!!: ::
+	
 	from mongoengine import *
 	from securemongoengine.fields import *
 
 	_key = 'workingWithAES256AlgorithmKey32B'
 
 	class User(Document):
-	    name = EncryptedStringField(key=_key,max_length=40, required=True)
-	    lastname = EncryptedStringField(key=_key,max_length=40, required=True)
-	    email = EncryptedEmailField(key=_key,required=True, unique=True)
+	    name = StringField(max_length=40, required=True)
+	    lastname = StringField(max_length=40, required=True)
+	    email = EmailField(required=True, unique=True)
 	    password = EncryptedStringField(key=_key,max_length=40, required=True)
-	    phone_number = EncryptedLongField(key=_key,min_value=8, max_value=99999999999)
-	    money = EncryptedDecimalField(key=_key)
-	    age = EncryptedIntField(key=_key)
-	    height = EncryptedFloatField(key=_key,required=False)
+	    
+	user = User(name='Juan',lastname='Urrego',email='js.urrego@novcat.co',password = '123456')
 
-	    meta = {'allow_inheritance': True, 'collection':'users'}
-
-	user = User(name='Juan',lastname='Urrego',email='js.urrego@novcat.co',password = '123456', phone_number=11234567,money=243.23,age=26,height=1.75)
-
+	connect('test', host='127.0.0.1')
 	user.save()
 
-	print User.objects().first().to_mongo()
+In your Mongo database you will see something like this: ::
 
-	>> SON([('_id', ObjectId('53ffe57f5f9370cbd8a2bea6')), ('_cls', 'User'), ('name', '@::::@d641ab1294
+	{ "_id" : ObjectId("5400c7205f9370f0603c3cfa"), "name" : "Juan", "lastname" : "Urrego", "email" : "js.urrego@novcat.co", "password" : "@::::@685f0500d7b99a59c9d6c496184a65bc" }
+
 
 Contents:
+----------
 
 .. toctree::
    :maxdepth: 2
-   
+   tutorial
    apireference
 
 :doc:`tutorial`
@@ -48,6 +49,22 @@ Contents:
 :doc:`apireference`
   The complete API documentation
 
+
+Offline Reading
+---------------
+
+Download the docs in `pdf <https://media.readthedocs.org/pdf/securemongoengine/latest/securemongoengine.pdf>`_
+or `epub <https://media.readthedocs.org/epub/securemongoengine/latest/securemongoengine.epub>`_
+formats for offline reading.
+
+
+.. toctree::
+    :maxdepth: 1
+    :numbered:
+    :hidden:
+
+    tutorial
+    apireference
 
 
 Indices and tables
