@@ -4,7 +4,7 @@ Welcome to SecureMongoEngine
 It is a library for MongoEngine(https://github.com/MongoEngine) that you can use to encrypt certain fields of your models. Currently is in Beta Version and it only supports AES for Symmetric Encryption and SHA for hashing.
 
 Usage
-^^^^^
+-------
 
 If you want to encrypt your data you only need to use the field that you need. ::
 
@@ -37,6 +37,14 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+
+:doc:`tutorial`
+  A quick tutorial building a tumblelog to get you up and running with
+  SecureMongoEngine.
+
+
+:doc:`apireference`
+  The complete API documentation
 
 
 
