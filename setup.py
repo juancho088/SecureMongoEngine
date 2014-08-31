@@ -11,7 +11,7 @@ setup(
     name = "SecureMongoEngine",
     version = "0.1.1",
     packages = find_packages(),
-    install_requires = ['Pillow>=2.5.3','pymongo>=2.7.2','mongoengine>=0.8.7','pycrypto>=2.6.1'],
+    install_requires = ['pymongo>=2.7.2','mongoengine>=0.8.7','pycrypto>=2.6.1'],
 
     # metadata for upload to PyPI
     author = "Juan Urrego",

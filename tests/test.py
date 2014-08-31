@@ -33,6 +33,20 @@ class TestEncryption24(unittest.TestCase):
 
 class TestEncryption16(unittest.TestCase):
     pass
-
+'''
 if __name__ == '__main__':
     unittest.main()
+'''
+
+user1 = User(name='Juan',lastname='Urrego',email='js.urrego@novcat.co',password = '123456', phone_number=11234567,money=243.23,age=26,height=1.75)
+connect('test', host='127.0.0.1')
+User.objects().delete()
+print 'nombre: '+str(user1.phone_number)
+user1.save()
+
+print User.objects().first().name
+print User.objects().first().email
+print User.objects().first().password
+print User.objects().first().phone_number.__class__
+print User.objects().first().to_mongo()
+
