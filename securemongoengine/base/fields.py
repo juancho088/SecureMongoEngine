@@ -1,49 +1,59 @@
 from mongoengine.base import BaseField
 from Crypto.Cipher import AES
-from exceptions import EncryptionKeyException
+from exceptions import EncryptionKeyException, CipherModeException
 import binascii
 
 class EncryptedField(BaseField):
     
     ''' Constants '''
 
-    AES = 'AES'
-    SHA_256 ='SHA256' # Hashing algorithm
-    AES_SHA='AES+SHA'
+    _AES = 'AES'
+    _SHA_256 ='SHA256' # Hashing algorithm
+    _AES_SHA='AES+SHA'
+
+    _CBC = 'CBC'
+    _CFB = 'CFB'
+    _CTR = 'CTR'
+    _OFB = 'OFB'
+    _OPENPGP = 'OPENPGP'
 
     ''' Attributes '''
 
-    prefix = '@::::@' # Prefix that values will have
-    algorithm = AES # Default algorithm value
+    algorithm = _AES # Default algorithm value
     internal_type = None # Internal type of the encrypted value
+    mode = AES.MODE_CBC
     
-
-    def __init__(self, algorithm=None, key=None,iv=None,**kwargs):
+    def __init__(self, algorithm=None, key=None,iv=None,mode=None,**kwargs):
         if algorithm:
             self.algorithm = algorithm
+
+        if mode:
+            if mode== self._CBC:
+                self.mode = AES.MODE_CBC
+            elif mode== self._CFB:
+                self.mode = AES.MODE_CFB
+            elif mode==self._CTR:
+                self.mode = AES.MODE_CTR
+            elif mode== self._OFB:
+                self.mode = AES.MODE_OFB
+            elif mode== self._OPENPGP:
+                self.mode = AES.MODE_OPENPGP
+            else:
+                raise CipherModeException()
+
         self.key = key
         self.iv = iv
         super(EncryptedField, self).__init__(**kwargs)
 
-    def __get__(self, instance, owner):
-        if instance is None:
-            return self
-
-        value=instance._data.get(self.name)
-
-        if (value.startswith(self.prefix)):
-            value=self.decrypt_value(value)      
-        
-        return value
-
     def __set__(self, instance, value):
-        value = str(value)
-        if (not value.startswith(self.prefix)):
-            value = self.encrypt_value(value)
+        try:
+            value=self.decrypt_value(value)
+        except:
+            pass #In case that the value is not encrypted (after decryption for example) 
         super(EncryptedField, self).__set__(instance, value)
 
     def to_mongo(self,value):
-        return str(value)
+        return self.encrypt_value(str(value))
 
     def prepare_query_value(self, op, value):        
         return self.encrypt_value(value)
@@ -56,7 +66,7 @@ class EncryptedField(BaseField):
     def get_aes_cipher(self):
         if len(self.key)==16 or len(self.key)==24 or len(self.key)==32:
             if self.iv and len(self.iv)==16:
-                return AES.new(self.key,IV=self.iv)
+                return AES.new(self.key,IV=self.iv,mode=self.mode)
             else:
                 return AES.new(self.key)
         else:
@@ -75,17 +85,15 @@ class EncryptedField(BaseField):
     ''' General Encryption Functions '''
 
     def decrypt_value (self,value):
-        if (value.startswith(self.prefix)):
-            if self.algorithm == self.AES:
-
-                # First it removes the prefix
-                value = self.aes_decryption(value[len(self.prefix):])
+        if self.algorithm == self._AES:
+            # First it removes the prefix
+            value = self.aes_decryption(value)
         return value
 
     def encrypt_value(self,value):
-        if self.algorithm == self.AES:
+        if self.algorithm == self._AES:
             value = self.aes_encryption(value)
 
             # Adds a prefix, so it is possible to know, at __set__ time, if the value is encrypted
-            value = self.prefix + value
+            value = value
         return value
