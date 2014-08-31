@@ -31,7 +31,7 @@ And now you can create a documment with some encrypted fields, you just need a k
 In your Mongo database you will see something like this:
 
 	{ "_id" : ObjectId("5400c7205f9370f0603c3cfa"), "name" : "Juan", "lastname" : "Urrego", 
-	"email" : "js.urrego@novcat.co", "password" : "@::::@685f0500d7b99a59c9d6c496184a65bc" }
+	"email" : "js.urrego@novcat.co", "password" : "685f0500d7b99a59c9d6c496184a65bc" }
 	
 Documentation
 -------------
