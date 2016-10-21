@@ -1,6 +1,6 @@
 from mongoengine.base import BaseField
 from Crypto.Cipher import AES
-from exceptions import EncryptionKeyException, CipherModeException
+from .exceptions import EncryptionKeyException, CipherModeException
 import binascii
 
 class EncryptedField(BaseField):
