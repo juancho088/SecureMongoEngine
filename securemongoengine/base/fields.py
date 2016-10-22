@@ -1,10 +1,10 @@
 from mongoengine.base import BaseField
 from Crypto.Cipher import AES
-from exceptions import EncryptionKeyException, CipherModeException
+from .exceptions import EncryptionKeyException, CipherModeException
 import binascii
 
 class EncryptedField(BaseField):
-    
+
     ''' Constants '''
 
     _AES = 'AES'
@@ -22,7 +22,7 @@ class EncryptedField(BaseField):
     algorithm = _AES # Default algorithm value
     internal_type = None # Internal type of the encrypted value
     mode = AES.MODE_CBC
-    
+
     def __init__(self, algorithm=None, key=None,iv=None,mode=None,**kwargs):
         if algorithm:
             self.algorithm = algorithm
@@ -49,13 +49,13 @@ class EncryptedField(BaseField):
         try:
             value=self.decrypt_value(value)
         except:
-            pass #In case that the value is not encrypted (after decryption for example) 
+            pass #In case that the value is not encrypted (after decryption for example)
         super(EncryptedField, self).__set__(instance, value)
 
     def to_mongo(self,value):
         return self.encrypt_value(str(value))
 
-    def prepare_query_value(self, op, value):        
+    def prepare_query_value(self, op, value):
         return self.encrypt_value(value)
 
     def get_internal_type(self):

@@ -1,8 +1,14 @@
 from mongoengine import *
-from base.fields import EncryptedField
+from .base.fields import EncryptedField
 
 __all__ = [
-    'EncryptedEmailField', 'EncryptedStringField', 'EncryptedIntField', 'EncryptedDecimalField', 'EncryptedFloatField','EncryptedLongField']
+    'EncryptedEmailField',
+    'EncryptedStringField',
+    'EncryptedIntField',
+    'EncryptedDecimalField',
+    'EncryptedFloatField',
+    'EncryptedLongField'
+]
 
 class EncryptedEmailField(EncryptedField,EmailField):
     internal_type = type(EmailField())
